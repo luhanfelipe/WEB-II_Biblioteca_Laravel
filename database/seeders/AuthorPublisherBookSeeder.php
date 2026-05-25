@@ -10,10 +10,10 @@ use App\Models\Publisher;
 
 class AuthorPublisherBookSeeder extends Seeder
 {
-    public function run(): void {
+    public function run(): void
+    {
         Author::factory(100)->create()->each(function ($author) {
-
-            $publisher = Publisher::factory()->create;
+            $publisher = Publisher::factory()->create();
 
             $author->books()->createMany(
                 Book::factory(10)->make([
@@ -21,7 +21,6 @@ class AuthorPublisherBookSeeder extends Seeder
                     'publisher_id' => $publisher->id,
                 ])->toArray()
             );
-
         });
     }
 }

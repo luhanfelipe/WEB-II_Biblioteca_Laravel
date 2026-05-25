@@ -12,9 +12,9 @@ class AuthorFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->fake()->name(),
-            'email' => $this->fake()->email(),
-            'birth_date' => $this->fake()->date()
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'birth_date' => $this->faker->optional()->date(),
         ];
     }
 }
