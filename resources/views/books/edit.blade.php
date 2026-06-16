@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="my-4">Editar Livro</h1>
 
-    <form action="{{ route('books.update', $book->id) }}" method="POST">
+    <form action="{{ route('books.update', $book->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -74,9 +74,23 @@
             @enderror
         </div>
 
+        <div class="mb-3">
+            <label for="cover_image" class="form-label">Capa do Livro</label>
+            @if($book->cover_image)
+                <div class="mb-2">
+                    <img src="{{ asset('storage/' . $book->cover_image) }}" alt="Capa atual" style="max-height: 150px;">
+                    <p class="text-muted">Imagem atual</p>
+                </div>
+            @endif
+            <input type="file" class="form-control @error('cover_image') is-invalid @enderror" 
+                   id="cover_image" name="cover_image" accept="image/*">
+            @error('cover_image')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
         <button type="submit" class="btn btn-success">Atualizar</button>
         <a href="{{ route('books.index') }}" class="btn btn-secondary">Voltar</a>
     </form>
 </div>
-
 @endsection

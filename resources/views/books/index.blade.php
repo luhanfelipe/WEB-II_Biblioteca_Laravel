@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
     <h1 class="my-4">Lista de Livros</h1>
 
@@ -20,20 +19,25 @@
 
     <table class="table table-striped">
         <thead>
-
             <tr>
                 <th>ID</th>
+                <th>Capa</th>
                 <th>Título</th>
                 <th>Autor</th>
                 <th>Ações</th>
             </tr>
-
         </thead>
-
         <tbody>
             @forelse($books as $book)
                 <tr>
                     <td>{{ $book->id }}</td>
+                    <td>
+                        @if($book->cover_image)
+                            <img src="{{ asset('storage/' . $book->cover_image) }}" alt="Capa" style="max-height: 50px;">
+                        @else
+                            <img src="{{ asset('images/default-cover.png') }}" alt="Capa padrão" style="max-height: 50px;">
+                        @endif
+                    </td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author->name }}</td>
                     <td>
@@ -54,17 +58,14 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4">Nenhum livro encontrado.</td>
+                    <td colspan="5">Nenhum livro encontrado.</td>
                 </tr>
             @endforelse
         </tbody>
-
     </table>
 
     <div class="d-flex justify-content-center">
         {{ $books->links() }}
     </div>
-
 </div>
-
 @endsection

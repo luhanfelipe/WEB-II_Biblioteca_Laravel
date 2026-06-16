@@ -4,6 +4,17 @@
 <div class="container">
     <h1 class="my-4">Detalhes do Livro</h1>
 
+    <!-- Capa do Livro -->
+    @if($book->cover_image)
+        <div class="text-center mb-3">
+            <img src="{{ asset('storage/' . $book->cover_image) }}" alt="Capa do Livro" style="max-height: 300px;" class="img-fluid">
+        </div>
+    @else
+        <div class="text-center mb-3">
+            <img src="{{ asset('images/default-cover.png') }}" alt="Capa padrão" style="max-height: 300px;" class="img-fluid">
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-header">
             <strong>Título:</strong> {{ $book->title }}
