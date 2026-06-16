@@ -7,6 +7,7 @@ use App\Models\Publisher;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class BookController extends Controller
 {
@@ -68,7 +69,8 @@ class BookController extends Controller
     public function show(Book $book)
     {
         $book->load(['author', 'publisher', 'category']);
-        return view('books.show', compact('book'));
+        $users = User::all();
+        return view('books.show', compact('book', 'users'));
     }
 
     // Editar livro (vamos preencher depois)
