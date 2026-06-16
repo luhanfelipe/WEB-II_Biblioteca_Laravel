@@ -1,11 +1,15 @@
 <?php
 
+// usar (pegar) de algo (algum lugar):
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PublisherController;
-use App\Http\Controllers\BookController;  // <-- LINHA NOVA
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 
+
+// rotas:
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,3 +30,4 @@ Route::post('/books/create-select', [BookController::class, 'storeWithSelect'])-
 
 // Rotas RESTful para index, show, edit, update, delete (exceto create e store)
 Route::resource('books', BookController::class)->except(['create', 'store']);
+Route::resource('users', UserController::class)->except(['create', 'store', 'destroy']);
