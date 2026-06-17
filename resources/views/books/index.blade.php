@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 <div class="container">
     <h1 class="my-4">Lista de Livros</h1>
@@ -11,10 +12,10 @@
     @endif
 
     <a href="{{ route('books.create.id') }}" class="btn btn-success mb-3">
-        <i class="bi bi-plus"></i> Adicionar Livro (Com ID)
+        <i class="bi bi-plus"></i> Adicionar Livro - Com ID
     </a>
     <a href="{{ route('books.create.select') }}" class="btn btn-primary mb-3">
-        <i class="bi bi-plus"></i> Adicionar Livro (Com Select)
+        <i class="bi bi-plus"></i> Adicionar Livro - Com Select
     </a>
 
     <table class="table table-striped">
