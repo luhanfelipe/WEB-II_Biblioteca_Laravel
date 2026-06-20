@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;  // <-- LINHA NOVA
+use App\Models\User;
+use App\Policies\UserPolicy;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
-    public function register(): void
-    {
-        //
-    }
+    protected $policies = [
+        User::class => UserPolicy::class,
+    ];
 
     public function boot(): void
     {
-        Paginator::useBootstrap();  // <-- LINHA NOVA
+        $this->registerPolicies();
     }
 }
