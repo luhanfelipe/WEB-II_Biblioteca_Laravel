@@ -21,17 +21,17 @@
         </div>
         <div class="card-body">
             <p><strong>ID:</strong> {{ $book->id }}</p>
-            <p><strong>Autor:</strong> 
+            <p><strong>Autor:</strong>
                 <a href="{{ route('authors.show', $book->author->id) }}">
                     {{ $book->author->name }}
                 </a>
             </p>
-            <p><strong>Editora:</strong> 
+            <p><strong>Editora:</strong>
                 <a href="{{ route('publishers.show', $book->publisher->id) }}">
                     {{ $book->publisher->name }}
                 </a>
             </p>
-            <p><strong>Categoria:</strong> 
+            <p><strong>Categoria:</strong>
                 <a href="{{ route('categories.show', $book->category->id) }}">
                     {{ $book->category->name }}
                 </a>
@@ -46,6 +46,12 @@
     @if(session('success'))
         <div class="alert alert-success mt-3">
             {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger mt-3">
+            {{ session('error') }}
         </div>
     @endif
 
