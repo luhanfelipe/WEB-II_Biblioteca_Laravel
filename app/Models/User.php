@@ -30,7 +30,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',  // <-- LINHA NOVA
+        'role',
+        'debit',
     ];
 
     // Métodos auxiliares para verificar papéis
@@ -47,6 +48,12 @@ class User extends Authenticatable
     public function isCliente(): bool
     {
         return $this->role === 'cliente';
+    }
+
+    // Método para verificar se o usuário tem débito
+    public function hasDebit(): bool
+    {
+        return $this->debit > 0;
     }
 
     // Relacionamento N para N com livros via tabela borrowings
