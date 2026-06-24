@@ -9,6 +9,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BorrowingController;
 use App\Models\User;
+use App\Http\Controllers\DebitController;
 
 
 // rotas:
@@ -44,3 +45,7 @@ Route::put('/users/{user}', [UserController::class, 'update'])->name('users.upda
 Route::post('/books/{book}/borrow', [BorrowingController::class, 'store'])->name('books.borrow');
 Route::get('/users/{user}/borrowings', [BorrowingController::class, 'userBorrowings'])->name('users.borrowings');
 Route::patch('/borrowings/{borrowing}/return', [BorrowingController::class, 'returnBook'])->name('borrowings.return');
+
+// Rotas para gerar débitos
+Route::get('/debits', [DebitController::class, 'index'])->name('debits.index')->middleware('can:manageBooks,' . User::class);
+Route::post('/debits/{user}/clear', [DebitController::class, 'clearDebit'])->name('debits.clear')->middleware('can:manageBooks,' . User::class);

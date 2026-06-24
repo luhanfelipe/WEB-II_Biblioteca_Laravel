@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,7 +33,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        @auth
+                            @can('manageBooks', App\Models\User::class)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('books.index') }}">Livros</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('debits.index') }}">
+                                        <i class="bi bi-coin"></i> Débitos
+                                    </a>
+                                </li>
+                            @endcan
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -77,7 +89,9 @@
         <main class="py-4">
             @yield('content')
         </main>
+
     </div>
+
 </body>
 
 </html>
