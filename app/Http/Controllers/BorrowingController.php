@@ -36,6 +36,13 @@ class BorrowingController extends Controller
                              ->with('error', 'Usuário já atingiu o limite máximo de 5 livros emprestados.');
         }
 
+        // Verificar se o usuário tem débito pendente (ATIVIDADE 10)
+        $user = User::find($request->user_id);
+        if ($user->hasDebit()) {
+            return redirect()->route('books.show', $book)
+                             ->with('error', 'Usuário possui débito pendente. Não é possível realizar novo empréstimo.');
+        }
+
         Borrowing::create([
             'user_id' => $request->user_id,
             'book_id' => $book->id,
@@ -48,11 +55,28 @@ class BorrowingController extends Controller
     // Registrar uma devolução
     public function returnBook(Borrowing $borrowing)
     {
+        // Calcular dias de atraso
+        $dataEmprestimo = $borrowing->borrowed_at;
+        $dataDevolucao = now();
+        $diasEmprestado = $dataEmprestimo->diffInDays($dataDevolucao);
+        $limiteDias = 15;
+
+        if ($diasEmprestado > $limiteDias) {
+            $diasAtraso = $diasEmprestado - $limiteDias;
+            $multa = $diasAtraso * 0.50;
+
+            // Atualizar débito do usuário
+            $user = $borrowing->user;
+            $user->debit += $multa;
+            $user->save();
+        }
+
         $borrowing->update([
             'returned_at' => now(),
         ]);
 
-        return redirect()->route('books.show', $borrowing->book_id)->with('success', 'Devolução registrada com sucesso.');
+        return redirect()->route('books.show', $borrowing->book_id)
+                         ->with('success', 'Devolução registrada com sucesso.');
     }
 
     // Listar empréstimos de um usuário
