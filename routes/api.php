@@ -6,3 +6,5 @@ use App\Http\Controllers\Api\BookApiController;
 
 Route::get('/books', [BookApiController::class, 'index']);
 Route::get('/books/{id}', [BookApiController::class, 'show']);
+Route::post('/books', [BookApiController::class, 'store']);
+Route::put('/books/{id}', [BookApiController::class, 'update']);
