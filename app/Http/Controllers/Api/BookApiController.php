@@ -69,4 +69,18 @@ class BookApiController extends Controller
         return response()->json($book);
     }
 
+    // DELETE /api/books/{id} - Deletar um livro
+    public function destroy($id)
+    {
+        $book = Book::find($id);
+
+        if (!$book) {
+            return response()->json(['message' => 'Livro não encontrado'], 404);
+        }
+
+        $book->delete();
+
+        return response()->json(['message' => 'Livro deletado com sucesso']);
+    }
+
 }
