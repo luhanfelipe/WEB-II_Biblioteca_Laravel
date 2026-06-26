@@ -10,13 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Book;
+use Laravel\Sanctum\HasApiTokens;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
+    use HasApiTokens, HasFactory, Notifiable;
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
 
     // Constante com os papéis disponíveis
     public const ROLES = [
