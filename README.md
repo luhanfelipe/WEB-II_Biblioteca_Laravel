@@ -1,63 +1,147 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 Biblioteca Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema de gerenciamento de biblioteca desenvolvido como prática da disciplina de **Desenvolvimento para Web II**.
 
+O projeto evoluiu ao longo da disciplina, passando por migrations, Eloquent, autenticação, CRUDs, sistema de empréstimos, API REST e autorização com papéis de usuário.
 
+---
 
+## 🚀 Funcionalidades
 
-## About Laravel
+- **Autenticação** com papéis de usuário:
+  - `admin` — pode tudo, inclusive editar papéis de outros usuários
+  - `bibliotecario` — gerencia livros, autores, editoras e categorias
+  - `cliente` — apenas visualiza informações
+- **CRUD completo** de:
+  - Livros (com upload de capa)
+  - Autores
+  - Editoras
+  - Categorias
+- **Sistema de empréstimos** com regras de negócio:
+  - Limite de 5 livros emprestados simultaneamente por usuário
+  - Multa de R$ 0,50 por dia de atraso (após 15 dias)
+  - Usuários com débito pendente não podem realizar novos empréstimos
+  - Interface para o bibliotecário gerenciar débitos
+- **API REST** para o recurso `Book` (GET, POST, PUT, DELETE)
+- **Autorização com Policies** para controle de permissões
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Tecnologias
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Laravel 13](https://laravel.com)
+- PHP 8.3+
+- MySQL
+- Bootstrap 5
+- Vite
+- Laravel UI (autenticação)
+- Laravel Sanctum (API)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📦 Como rodar o projeto
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Pré-requisitos
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- PHP 8.3 ou superior
+- Composer
+- Node.js e npm
+- MySQL
 
+### Passo a passo
 
+1. **Clone o repositório:**
+   git clone https://github.com/luhanfelipe/WEB-II_Biblioteca_Laravel.git
+   cd WEB-II_Biblioteca_Laravel
 
-## Agentic Development
+2. **Instale as dependências PHP:**
+   composer install
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+3. **Instale as dependências do frontend:**
+   npm install
 
-```bash
-composer require laravel/boost --dev
+4. **Configure o arquivo .env:**
+   cp .env.example .env
 
-php artisan boost:install
-```
+- Edite o .env com as credenciais do seu banco de dados:
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=biblioteca_laravel
+   DB_USERNAME=root
+   DB_PASSWORD=
 
-## Contributing
+5. **Gere a chave da aplicação**
+   php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. **Crie o banco de dados no MySQL:**
+   CREATE DATABASE biblioteca_laravel;
 
-## Code of Conduct
+7. **Rode as migrations e popule o banco:**
+   php artisan migrate --seed
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+8. **Crie o link simbólico para o storage (upload de imagens):**
+   php artisan storage:link
 
-## Security Vulnerabilities
+9. **Rode o projeto (dois terminais):**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Terminal 1 — Frontend:
+   npm run dev
 
-## License
+- Terminal 2 — Backend:
+   composer run dev
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+10. **Acesse no navegador:**
+   http://localhost:8000
+
+---
+
+## 🔑 Usuário admin padrão (criado pelo seeder)
+
+- E-mail: admin@biblioteca.com
+- Senha: 12345678
+
+---
+
+## 🌐 Endpoints da API
+
+A API segue o padrão REST e retorna os dados em formato JSON.
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `GET` | `/api/books` | Lista todos os livros cadastrados |
+| `GET` | `/api/books/{id}` | Exibe os dados de um livro específico |
+| `POST` | `/api/books` | Cria um novo livro |
+| `PUT` | `/api/books/{id}` | Atualiza um livro existente |
+| `DELETE` | `/api/books/{id}` | Remove um livro |
+
+### 📥 Exemplo de requisição (POST)
+
+curl -X POST http://localhost:8000/api/books \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "title=O Mágico de Oz" \
+  -d "pages=218" \
+  -d "author_id=1" \
+  -d "category_id=2" \
+  -d "publisher_id=1"
+
+---
+
+## 📄 Licença
+
+Este projeto utiliza o framework Laravel, que é um software open-source licenciado sob a MIT license.
+
+---
+
+## 🙏 Créditos
+
+Este projeto foi construído com o apoio das seguintes ferramentas e bibliotecas:
+
+| Ferramenta | Descrição |
+|------------|-----------|
+| [Laravel](https://laravel.com) | Framework PHP utilizado em toda a aplicação |
+| [Laravel UI](https://github.com/laravel/ui) | Scaffolding de autenticação (login, registro, etc.) |
+| [Laravel Sanctum](https://github.com/laravel/sanctum) | Autenticação de API com tokens |
+| [Bootstrap](https://getbootstrap.com) | Framework CSS para estilização da interface |
+| [Bootstrap Icons](https://icons.getbootstrap.com) | Ícones utilizados nos botões e menus |
